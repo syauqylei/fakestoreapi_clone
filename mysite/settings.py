@@ -38,15 +38,18 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'rest_framework',
-    'rest_framework_simplejwt',
-    'myapi.apps.MyapiConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'rest_framework',
+    'rest_framework_simplejwt',
+    'drf_yasg',
+    'coreapi',
+    'myapi.apps.MyapiConfig',
 ]
 
 MIDDLEWARE = [
@@ -118,11 +121,13 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 REST_FRAMEWORK = {
+    'EXCEPTION_HANDLER': 'myapi.utils.exceptions_handler.base_exception_handler',
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated'
-    ),
+        'rest_framework.permissions.IsAuthenticated',
+    ), 'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication'),
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10
 }
@@ -145,8 +150,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-
-CSRF_USE_SESIONS = False
-CSRF_COOKIE_SECURE = False
-CSRF_COOKIE_HTTPONLY = False
-CSRF_COOKIE_SAMESITE = None
+TEST_RUNNER = "django_nose.NoseTestSuiteRunner"
