@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
-from myapi.views import RegisterView
+from myapi.views import RegisterView, ProductList
 from rest_framework_simplejwt.views import (
     TokenObtainPairView, TokenRefreshView,)
 from rest_framework import permissions
@@ -25,7 +25,7 @@ from drf_yasg import openapi
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="Snippets API",
+        title="FakeStore API Clone",
         default_version='v1',
         description="Test description",
         terms_of_service="https://www.google.com/policies/terms/",
@@ -44,6 +44,7 @@ urlpatterns = [
                                          cache_timeout=0), name='schema-redoc'),
     path('admin/', admin.site.urls),
     path('register/', RegisterView.as_view(), name='register'),
-    path('login/', TokenObtainPairView.as_view(), name='login_jwt'),
+    path('login/', TokenObtainPairView.as_view(), name='login'),
     path('login/refresh', TokenRefreshView.as_view(), name='refresh_token'),
+    path('products/', ProductList.as_view(), name="products")
 ]

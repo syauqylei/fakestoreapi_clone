@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from .models import Product
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
@@ -26,3 +27,9 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.save()
 
         return user
+
+
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ['title', 'price', 'category', 'description', 'image']
