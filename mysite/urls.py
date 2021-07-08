@@ -16,9 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
-from myapi.views import RegisterView, ProductList
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView, TokenRefreshView,)
+from myapi.views import RegisterView, ProductList, DecoratedTokenObtainPairView, DecoratedTokenRefreshView
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
@@ -44,7 +42,7 @@ urlpatterns = [
                                          cache_timeout=0), name='schema-redoc'),
     path('admin/', admin.site.urls),
     path('register/', RegisterView.as_view(), name='register'),
-    path('login/', TokenObtainPairView.as_view(), name='login'),
-    path('login/refresh', TokenRefreshView.as_view(), name='refresh_token'),
+    path('login/', DecoratedTokenObtainPairView.as_view(), name='login'),
+    path('login/refresh', DecoratedTokenRefreshView.as_view(), name='refresh_token'),
     path('products/', ProductList.as_view(), name="products")
 ]

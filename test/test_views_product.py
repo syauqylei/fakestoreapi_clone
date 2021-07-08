@@ -7,16 +7,6 @@ import json
 
 
 class TestProduct(TestSetUp):
-    def setUp(self):
-        super().setUp()
-
-        Product.objects.create(
-            title='monitor', price=100, description='cheap monitor',
-            image='https://dummyimage.com/600x400/000/fff',)
-        Product.objects.create(
-            title='mouse', price=20, description='Mouse',
-            image='https://dummyimage.com/600x400/000/fff',)
-
     def test_product_isNotAuthenticated(self):
         res = self.client.get(reverse('products'))
 
@@ -36,4 +26,3 @@ class TestProduct(TestSetUp):
         serializer = ProductSerializer(products, many=True)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(res.data, serializer.data)
-        self.assertEqual(Product.objects.count(), 2)
