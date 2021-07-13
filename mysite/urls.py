@@ -13,13 +13,13 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
-from myapi.views import RegisterView, ProductList, DecoratedTokenObtainPairView, DecoratedTokenRefreshView
+from myapi.views import RegisterView, ProductList, DecoratedTokenObtainPairView, DecoratedTokenRefreshView, ProductDetail, RedirectViewSwagger
 from rest_framework import permissions
-from drf_yasg.views import get_schema_view
-from drf_yasg import openapi
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -41,8 +41,10 @@ urlpatterns = [
     url(r'^redoc/$', schema_view.with_ui('redoc',
                                          cache_timeout=0), name='schema-redoc'),
     path('admin/', admin.site.urls),
+    path('', RedirectViewSwagger),
     path('register/', RegisterView.as_view(), name='register'),
     path('login/', DecoratedTokenObtainPairView.as_view(), name='login'),
     path('login/refresh', DecoratedTokenRefreshView.as_view(), name='refresh_token'),
-    path('products/', ProductList.as_view(), name="products")
+    path('products/', ProductList.as_view(), name="products"),
+    path('products/<int:pk>/', ProductDetail.as_view(), name="products_detail")
 ]

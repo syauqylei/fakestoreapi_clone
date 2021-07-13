@@ -30,6 +30,8 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
+    category = serializers.StringRelatedField()
+
     class Meta:
         model = Product
         fields = ['title', 'price', 'category', 'description', 'image']

@@ -42,6 +42,10 @@ class TestSetUp(APITestCase):
         }
         self.user = User.objects.create_user(
             username="rindu123", password="password123", email="rindu@mail.com")
+        self.user_admin = User.objects.create_user(
+            username="admin", password="admin12345", email="admin@mail.com")
+        self.user_admin.is_staff = True
+        self.user_admin.save()
 
         return super().setUp()
 
